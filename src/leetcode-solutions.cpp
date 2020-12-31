@@ -9,7 +9,7 @@ ListNode* add_two_numbers(ListNode *l1, ListNode *l2)
     ListNode *list = new ListNode();
     ListNode *itr = list;
 
-    while(l1 != nullptr || l2 != nullptr) {
+    while (l1 != nullptr || l2 != nullptr) {
         itr->val = (l1 != nullptr) ? l1->val : 0;
         itr->val += (l2 != nullptr) ? l2->val : 0;
         if (carry) itr->val++;
@@ -84,7 +84,7 @@ double _median_sorted_arrays(int *arr1, int *arr2, int size1, int size2)
     int j = 0;
     int k = 0;
 
-    while(j < size1 || k < size2) {
+    while (j < size1 || k < size2) {
         prev = median;
 
         if (j < size1 && k < size2)
@@ -147,4 +147,71 @@ double median_sorted_arrays(std::vector<int>& nums1, std::vector<int>& nums2)
     double median = median_sorted_arrays(arr1, arr2, size1, size2);
 
     return median;
+}
+
+int expand_around_center(std::string& s, int l, int r)
+{
+    int slen = s.length();
+
+    while (l >= 0 && r < slen && s[l] == s[r]) {
+            l--;
+            r++;
+    }
+
+    /* --r - ++l + 1 => r - l - 1; */
+    return r - l - 1;
+}
+
+std::string longest_palindrome(std::string str)
+{
+    int strlen = str.length();
+    if (strlen < 1) return "";
+
+    int start = 0;
+    int end = 0;
+    for (int i = 0; i < strlen; i++) {
+        int len = std::max(expand_around_center(str, i, i),
+                           expand_around_center(str, i, i + 1));
+        if (len > end - start + 1) {
+            start = i - (len - 1) / 2;
+            end = i + len / 2;
+        }
+    }
+
+    return str.substr(start, end - start + 1);
+}
+
+std::string zigzag_convert(std::string str, int rows)
+{
+    int strlen = str.length();
+
+    if (rows == 1 || strlen == 1) return str;
+
+    int jumplen = 2 * rows - 2;
+    std::string zigstr(strlen, 'x');
+
+    int j = 0;
+    int k;
+
+    /* PAYPALISHIRING
+     *
+     * P     I    N             0       6       12
+     * A   L S  I G             1    5  7    11 13
+     * Y A   H R                2  4    8  10
+     * P     I                  3       9
+     */
+
+    for (int i = 0; i < rows; i++) {
+        k = 0;
+        while ( i + k < strlen || i + k - 2*i < strlen) {
+            if (i != 0 && i != rows - 1 && k != 0) {
+                // if (i + k - 2*i < strlen) is always true
+                zigstr[j++] = str[i + k - 2*i];
+            }
+            if (i + k < strlen) zigstr[j++] = str[i + k];
+            k += jumplen;
+        }
+    }
+
+    return zigstr;
 }
