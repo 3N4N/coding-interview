@@ -36,32 +36,6 @@ ListNode* add_two_numbers(ListNode *l1, ListNode *l2)
     return list;
 }
 
-// int len_longest_substr(std::string str)
-// {
-//     int strlen = str.length();
-//     int sublen = 0;
-//     bool unique;
-
-//     for (int window_end = 0; window_end < strlen; window_end++) {
-//         int cnt = 0;
-//         for (int j = window_end; j < strlen; j++) {
-//             unique = true;
-//             for (int k = window_end; k < j; k++) {
-//                 if (str[k] == str[j]) {
-//                     unique = false;
-//                     break;
-//                 }
-//             }
-//             if (unique) cnt++;
-//             else break;
-//         }
-//         sublen = std::std::max(sublen, cnt);
-//     }
-
-//     return sublen;
-// }
-
-
 int len_longest_substr(std::string str)
 {
     int strlen = str.length();
