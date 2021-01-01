@@ -2,6 +2,8 @@
 #include <iostream>
 #include <set>
 #include <unordered_map>
+#include <climits>
+#include <cassert>
 
 ListNode* add_two_numbers(ListNode *l1, ListNode *l2)
 {
@@ -214,4 +216,82 @@ std::string zigzag_convert(std::string str, int rows)
     }
 
     return zigstr;
+}
+
+
+int reverse_int(int x)
+{
+    int rev = 0;
+    int pop;
+
+    while(x) {
+        pop = x % 10;
+        x /= 10;
+        /* check for overflow */
+        if (rev > INT_MAX/10 || rev < INT_MIN/10
+            /* INT_MAX = +2147483647
+             * INT_MIN = -2147483648 */
+            || (rev == INT_MAX/10 && pop > 7)
+            || (rev == INT_MIN/10 && pop < -8)) return 0;
+        // rev = rev * 10 + pop;
+        rev *= 10;
+        rev += pop;
+    }
+
+    return rev;
+}
+
+
+int my_atoi(std::string str)
+{
+    int strlen = str.length();
+
+    int num = 0;
+    bool is_neg = false;
+    bool first_char_found = false;
+
+    for (int i = 0; i < strlen; i++) {
+
+        if (str[i] >= '0' && str[i] <= '9') {
+            if (!is_neg && (num > INT_MAX/10
+                            || (num == INT_MAX/10
+                                && (str[i] - '0') > 7))) {
+                return INT_MAX;
+            }
+            if (is_neg && (num < INT_MIN/10
+                           || (num == INT_MIN/10
+                               && str[i] - '0' > 8))) {
+                return INT_MIN;
+            }
+            if (is_neg) num = num * 10 - (str[i] - '0');
+            else num = num * 10 + (str[i] - '0');
+            first_char_found = true;
+        }
+        else if (str[i] == '-') {
+            if (first_char_found) return num;
+            is_neg = true;
+            first_char_found = true;
+        }
+        else if (str[i] == '+') {
+            if (first_char_found) return num;
+            first_char_found = true;
+        }
+        else if (str[i] == ' ') {
+            if (first_char_found) return num;
+            continue;
+        }
+        else break;
+    }
+
+    return num;
+}
+
+bool is_palindrome(int x)
+{
+    if (x < 0) return false;
+    if (x >= 0 && x <=9) return true;
+
+    int rev_x = reverse_int(x);
+
+    return rev_x == x;
 }

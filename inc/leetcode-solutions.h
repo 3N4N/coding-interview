@@ -20,5 +20,13 @@ std::string longest_palindrome(std::string str);
 // https://leetcode.com/problems/zigzag-conversion/
 std::string zigzag_convert(std::string str, int rows);
 
+// https://leetcode.com/problems/reverse-integer/
+int reverse_int(int x);
+
+// https://leetcode.com/problems/string-to-integer-atoi/
+int my_atoi(std::string s);
+
+// https://leetcode.com/problems/palindrome-number/
+bool is_palindrome(int x);
 
 #endif      // LEETCODE_SOLUTIONS_H
