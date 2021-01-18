@@ -29,4 +29,16 @@ int my_atoi(std::string s);
 // https://leetcode.com/problems/palindrome-number/
 bool is_palindrome(int x);
 
+// https://leetcode.com/problems/container-with-most-water/
+int maxArea(std::vector<int>& height);
+
+// https://leetcode.com/problems/integer-to-roman/
+std::string int_to_roman(int num);
+
+// https://leetcode.com/problems/roman-to-integer/
+int roman_to_int(std::string s);
+
+// https://leetcode.com/problems/longest-common-prefix/
+std::string longestCommonPrefix(std::vector<std::string>& strs);
+
 #endif      // LEETCODE_SOLUTIONS_H

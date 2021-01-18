@@ -295,3 +295,117 @@ bool is_palindrome(int x)
 
     return rev_x == x;
 }
+int maxArea(std::vector<int>& height)
+{
+    int max_area = INT_MIN;
+    int len = height.size();
+    int area;
+
+    int p1 = 0;
+    int p2 = len - 1;
+
+    while(p1 < p2) {
+        area = (p2 - p1) * std::min(height[p1], height[p2]);
+        max_area = std::max(max_area, area);
+        if (height[p1] == height[p2]) {
+            break;
+        } else if (height[p1] > height[p2]) {
+            p2--;
+        } else {
+            p1++;
+        }
+    }
+
+    return max_area;
+}
+
+std::string int_to_roman(int num)
+{
+    std::string numerals[] = {"M", "CM", "D", "CD", "C", "XC", "L",
+        "XL", "X", "IX", "V", "IV", "I"};
+    const int values[] = {1000, 900, 500, 400, 100, 90, 50, 40, 10,
+        9, 5, 4, 1};
+
+    char* numeral = new char[20];
+
+    int i = 0;
+    int j = 0;
+
+    while (num > 0) {
+        if (num - values[i] >= 0) {
+            for (int m = 0; m < numerals[i].length(); m++) {
+                numeral[j++] = numerals[i][m];
+            }
+            num -= values[i];
+        } else {
+            i++;
+        }
+    }
+    numeral[j] = '\0';
+
+    std::string retstr(numeral);
+    delete [] numeral;
+
+    return retstr;
+}
+
+int roman_to_int(std::string s)
+{
+    std::string numerals[] = {"M", "CM", "D", "CD", "C", "XC", "L",
+        "XL", "X", "IX", "V", "IV", "I"};
+    const int values[] = {1000, 900, 500, 400, 100, 90, 50, 40, 10,
+        9, 5, 4, 1};
+
+    int num = 0;
+
+    int s_ptr = 0;
+    int s_len = s.length();
+    int i = 0;
+
+    while (s_ptr < s_len) {
+        if (s[s_ptr] == numerals[i][0]
+            && s.compare(s_ptr, numerals[i].length(), numerals[i]) == 0) {
+            num += values[i];
+            s_ptr += numerals[i].length();
+        } else {
+            i++;
+        }
+    }
+
+    return num;
+}
+
+std::string longestCommonPrefix(std::vector<std::string>& strs)
+{
+    int size = strs.size();
+
+    if (size == 0) return "";
+
+    char* prefix = new char[201];
+
+    int i = 0;
+    bool ith_char_same;
+    char char_to_match;
+
+    while(true) {
+        ith_char_same = true;
+        if (strs[0].length() <= i) break;
+        char_to_match = strs[0][i];
+        for (int x = 0; x < size; x++) {
+            if (strs[x].length() <= i || strs[x][i] != char_to_match) {
+                ith_char_same = false;
+                break;
+            }
+        }
+        if (!ith_char_same) break;
+        prefix[i] = char_to_match;
+        i++;
+    }
+
+    prefix[i] = '\0';
+
+    std::string str(prefix);
+    delete[] prefix;
+
+    return str;
+}
