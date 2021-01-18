@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <climits>
 #include <cassert>
+#include <algorithm>
 
 ListNode* add_two_numbers(ListNode *l1, ListNode *l2)
 {
@@ -408,4 +409,85 @@ std::string longestCommonPrefix(std::vector<std::string>& strs)
     delete[] prefix;
 
     return str;
+}
+
+std::vector<std::vector<int>> threeSum(std::vector<int>& nums)
+{
+    std::set<std::vector<int>> triplets;
+    std::sort(nums.begin(), nums.end());
+
+    std::vector<int> negatives;
+    std::vector<int> positives;
+    int zeroes = 0;
+
+    std::vector<int>::iterator itr;
+
+    for (itr = nums.begin(); itr != nums.end(); itr++) {
+        if (*itr == 0) zeroes++;
+        if (*itr < 0) negatives.push_back(*itr);
+        else positives.push_back(*itr);
+    }
+
+    for (int i = 0; i < zeroes / 3; i++) {
+        triplets.insert({0,0,0});
+    }
+
+    int neg_size = negatives.size();
+    int pos_size = positives.size();
+    int complement;
+    int idx;
+
+    for (int i = 0; i < pos_size; i++) {
+        complement = -1 * positives[i];
+
+        int l = 0;
+        int r = neg_size - 1;
+
+        while(l < r) {
+            if (negatives[l] + negatives[r] == complement) {
+                triplets.insert({negatives[l], negatives[r], positives[i]});
+                l++;
+                r--;
+            }
+            else if (negatives[l] + negatives[r] > complement) {
+                r--;
+            }
+            else {
+                l++;
+            }
+        }
+
+        for (int j = i + 1; j < pos_size; j++)
+            if (positives[j] == positives[i]) i++;
+            else break;
+    }
+
+    for (int i = 0; i < neg_size; i++) {
+        complement = -1 * negatives[i];
+
+        int l = 0;
+        int r = pos_size - 1;
+
+        while(l < r) {
+            if (positives[l] + positives[r] == complement) {
+                triplets.insert({negatives[i], positives[l], positives[r]});
+                l++;
+                r--;
+            }
+            else if (positives[l] + positives[r] > complement) {
+                r--;
+            }
+            else {
+                l++;
+            }
+        }
+
+        for (int j = i + 1; j < neg_size; j++)
+            if (negatives[j] == negatives[i]) i++;
+            else break;
+    }
+
+    std::vector<std::vector<int>> vec(triplets.begin(), triplets.end());
+
+    return vec;
 }

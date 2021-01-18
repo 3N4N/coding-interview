@@ -41,4 +41,7 @@ int roman_to_int(std::string s);
 // https://leetcode.com/problems/longest-common-prefix/
 std::string longestCommonPrefix(std::vector<std::string>& strs);
 
+// https://leetcode.com/problems/3sum/
+std::vector<std::vector<int>> threeSum(std::vector<int>& nums);
+
 #endif      // LEETCODE_SOLUTIONS_H
