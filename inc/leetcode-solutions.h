@@ -53,6 +53,10 @@ std::vector<std::string> letterCombinations(std::string digits);
 // https://leetcode.com/problems/4sum/
 std::vector<std::vector<int>> fourSum(std::vector<int>& nums, int target);
 
+// https://leetcode.com/problems/remove-nth-node-from-end-of-list/
+ListNode* removeNthFromEnd(ListNode* head, int n);
 
+// https://leetcode.com/problems/valid-parentheses/
+bool brackets_valid(std::string s);
 
 #endif      // LEETCODE_SOLUTIONS_H

@@ -595,3 +595,73 @@ vector<vector<int>> fourSum(vector<int>& nums, int target)
 
     return vec;
 }
+
+
+
+ListNode* removeNthFromEnd(ListNode* head, int n)
+{
+    ListNode *lp = head;
+    int len = 0;
+
+    while ( lp != nullptr) {
+        len++;
+        lp = lp->next;
+    }
+
+    int idx = len - n - 1;
+
+    if (idx < 0) {
+        ListNode *node = head->next;
+        delete head;
+        return node;
+    }
+
+    lp = head;
+    for (int i = 0; i < idx; ++i) {
+        lp = lp->next;
+    }
+
+    ListNode *node = lp->next;
+    lp->next = lp->next->next;
+    delete node;
+
+    return head;
+}
+
+
+bool brackets_valid(string s)
+{
+    int len = s.length();
+    string unclosed_brackets;
+
+    for (int i = 0; i < len; ++i) {
+        if (s.at(i) == '(' || s.at(i) == '{' || s.at(i) == '[') {
+            unclosed_brackets.push_back(s.at(i));
+        }
+        else if (s.at(i) == ')') {
+            if (unclosed_brackets.length() == 0
+                || unclosed_brackets.at(unclosed_brackets.length() - 1) != '(')
+                return false;
+            unclosed_brackets.pop_back();
+        }
+        else if (s.at(i) == '}') {
+            if (unclosed_brackets.length() == 0
+                || unclosed_brackets.at(unclosed_brackets.length() - 1) != '{')
+                return false;
+            unclosed_brackets.pop_back();
+        }
+        else if (s.at(i) == ']') {
+            if (unclosed_brackets.length() == 0
+                ||unclosed_brackets.at(unclosed_brackets.length() - 1) != '[')
+                return false;
+            unclosed_brackets.pop_back();
+        }
+        else {
+            // throw error
+        }
+    }
+
+    if (unclosed_brackets.length() == 0) return true;
+
+    return false;
+}
