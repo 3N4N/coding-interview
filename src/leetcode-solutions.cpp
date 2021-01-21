@@ -6,6 +6,8 @@
 #include <cassert>
 #include <algorithm>
 
+using namespace std;
+
 ListNode* add_two_numbers(ListNode *l1, ListNode *l2)
 {
     bool carry = false;
@@ -39,7 +41,7 @@ ListNode* add_two_numbers(ListNode *l1, ListNode *l2)
     return list;
 }
 
-int len_longest_substr(std::string str)
+int len_longest_substr(string str)
 {
     int strlen = str.length();
 
@@ -47,7 +49,7 @@ int len_longest_substr(std::string str)
 
     int sublen = -1;
     int window_start = 0;
-    std::unordered_map<char, int> umap;
+    unordered_map<char, int> umap;
 
     for (int window_end = 0; window_end < strlen; window_end++) {
         if (umap.find(str[window_end]) != umap.end()) {
@@ -66,9 +68,9 @@ int len_longest_substr(std::string str)
              * not necessary and will only add to time complexity.
              */
 
-            window_start = std::max(window_start, umap[str[window_end]] + 1);
+            window_start = max(window_start, umap[str[window_end]] + 1);
         }
-        sublen = std::max(sublen, window_end - window_start + 1);
+        sublen = max(sublen, window_end - window_start + 1);
         umap[str[window_end]] = window_end;
     }
 
@@ -140,7 +142,7 @@ double median_sorted_arrays(int *arr1, int *arr2, int size1, int size2)
                                 size1 - cut, size2 - cut);
 }
 
-double median_sorted_arrays(std::vector<int>& nums1, std::vector<int>& nums2)
+double median_sorted_arrays(vector<int>& nums1, vector<int>& nums2)
 {
     int size1 = nums1.size();
     int size2 = nums2.size();
@@ -152,7 +154,7 @@ double median_sorted_arrays(std::vector<int>& nums1, std::vector<int>& nums2)
     return median;
 }
 
-int expand_around_center(std::string& s, int l, int r)
+int expand_around_center(string& s, int l, int r)
 {
     int slen = s.length();
 
@@ -165,7 +167,7 @@ int expand_around_center(std::string& s, int l, int r)
     return r - l - 1;
 }
 
-std::string longest_palindrome(std::string str)
+string longest_palindrome(string str)
 {
     int strlen = str.length();
     if (strlen < 1) return "";
@@ -173,7 +175,7 @@ std::string longest_palindrome(std::string str)
     int start = 0;
     int end = 0;
     for (int i = 0; i < strlen; i++) {
-        int len = std::max(expand_around_center(str, i, i),
+        int len = max(expand_around_center(str, i, i),
                            expand_around_center(str, i, i + 1));
         if (len > end - start + 1) {
             start = i - (len - 1) / 2;
@@ -184,14 +186,14 @@ std::string longest_palindrome(std::string str)
     return str.substr(start, end - start + 1);
 }
 
-std::string zigzag_convert(std::string str, int rows)
+string zigzag_convert(string str, int rows)
 {
     int strlen = str.length();
 
     if (rows == 1 || strlen == 1) return str;
 
     int jumplen = 2 * rows - 2;
-    std::string zigstr(strlen, 'x');
+    string zigstr(strlen, 'x');
 
     int j = 0;
     int k;
@@ -243,7 +245,7 @@ int reverse_int(int x)
 }
 
 
-int my_atoi(std::string str)
+int my_atoi(string str)
 {
     int strlen = str.length();
 
@@ -296,7 +298,7 @@ bool is_palindrome(int x)
 
     return rev_x == x;
 }
-int maxArea(std::vector<int>& height)
+int maxArea(vector<int>& height)
 {
     int max_area = INT_MIN;
     int len = height.size();
@@ -306,8 +308,8 @@ int maxArea(std::vector<int>& height)
     int p2 = len - 1;
 
     while(p1 < p2) {
-        area = (p2 - p1) * std::min(height[p1], height[p2]);
-        max_area = std::max(max_area, area);
+        area = (p2 - p1) * min(height[p1], height[p2]);
+        max_area = max(max_area, area);
         if (height[p1] == height[p2]) {
             break;
         } else if (height[p1] > height[p2]) {
@@ -320,9 +322,9 @@ int maxArea(std::vector<int>& height)
     return max_area;
 }
 
-std::string int_to_roman(int num)
+string int_to_roman(int num)
 {
-    std::string numerals[] = {"M", "CM", "D", "CD", "C", "XC", "L",
+    string numerals[] = {"M", "CM", "D", "CD", "C", "XC", "L",
         "XL", "X", "IX", "V", "IV", "I"};
     const int values[] = {1000, 900, 500, 400, 100, 90, 50, 40, 10,
         9, 5, 4, 1};
@@ -344,15 +346,15 @@ std::string int_to_roman(int num)
     }
     numeral[j] = '\0';
 
-    std::string retstr(numeral);
+    string retstr(numeral);
     delete [] numeral;
 
     return retstr;
 }
 
-int roman_to_int(std::string s)
+int roman_to_int(string s)
 {
-    std::string numerals[] = {"M", "CM", "D", "CD", "C", "XC", "L",
+    string numerals[] = {"M", "CM", "D", "CD", "C", "XC", "L",
         "XL", "X", "IX", "V", "IV", "I"};
     const int values[] = {1000, 900, 500, 400, 100, 90, 50, 40, 10,
         9, 5, 4, 1};
@@ -376,7 +378,7 @@ int roman_to_int(std::string s)
     return num;
 }
 
-std::string longestCommonPrefix(std::vector<std::string>& strs)
+string longestCommonPrefix(vector<string>& strs)
 {
     int size = strs.size();
 
@@ -405,22 +407,22 @@ std::string longestCommonPrefix(std::vector<std::string>& strs)
 
     prefix[i] = '\0';
 
-    std::string str(prefix);
+    string str(prefix);
     delete[] prefix;
 
     return str;
 }
 
-std::vector<std::vector<int>> threeSum(std::vector<int>& nums)
+vector<vector<int>> threeSum(vector<int>& nums)
 {
-    std::set<std::vector<int>> triplets;
-    std::sort(nums.begin(), nums.end());
+    set<vector<int>> triplets;
+    sort(nums.begin(), nums.end());
 
-    std::vector<int> negatives;
-    std::vector<int> positives;
+    vector<int> negatives;
+    vector<int> positives;
     int zeroes = 0;
 
-    std::vector<int>::iterator itr;
+    vector<int>::iterator itr;
 
     for (itr = nums.begin(); itr != nums.end(); itr++) {
         if (*itr == 0) zeroes++;
@@ -487,7 +489,7 @@ std::vector<std::vector<int>> threeSum(std::vector<int>& nums)
             else break;
     }
 
-    std::vector<std::vector<int>> vec(triplets.begin(), triplets.end());
+    vector<vector<int>> vec(triplets.begin(), triplets.end());
 
     return vec;
 }
