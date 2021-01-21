@@ -44,4 +44,15 @@ std::string longestCommonPrefix(std::vector<std::string>& strs);
 // https://leetcode.com/problems/3sum/
 std::vector<std::vector<int>> threeSum(std::vector<int>& nums);
 
+// https://leetcode.com/problems/3sum-closest/
+int threeSumClosest(std::vector<int>& nums, int target);
+
+// https://leetcode.com/problems/letter-combinations-of-a-phone-number/
+std::vector<std::string> letterCombinations(std::string digits);
+
+// https://leetcode.com/problems/4sum/
+std::vector<std::vector<int>> fourSum(std::vector<int>& nums, int target);
+
+
+
 #endif      // LEETCODE_SOLUTIONS_H

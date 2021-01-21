@@ -493,3 +493,105 @@ vector<vector<int>> threeSum(vector<int>& nums)
 
     return vec;
 }
+
+int threeSumClosest(vector<int>& nums, int target)
+{
+    sort(nums.begin(), nums.end());
+    int size = nums.size();
+
+    // given : -10^4 < target < 10^4
+    int closest = 100000; // not INT_MAX cause abs(closest - target) won't work
+    int sum;
+    int l,r;
+
+    for (int i = 0; i < size - 2; i++) {
+        // not i < size cause l or r would be equal to i
+        l = i + 1;
+        // NOTE: not l = 0 cause we'd consider same triplets twice
+        r = size - 1;
+
+        while ( l < r ) {
+            sum = nums[i] + nums[l] + nums[r];
+            if (abs(sum - target) < abs(closest - target))
+                closest = sum;
+
+            if (sum == target) return sum;
+            else if (sum < target) l++;
+            else r--;
+        }
+    }
+
+    return closest;
+}
+
+
+vector<string> coms;
+const string maps[10] = {   "", "", "abc", "def",
+                            "ghi",  "jkl", "mno",
+                            "pqrs", "tuv", "wxyz"   };
+
+void _letterCombinations(string digits, int idx, string building)
+{
+    if (idx == digits.length()) {
+        coms.push_back(building);
+        return;
+    }
+
+    int digit = digits.at(idx) - '0';
+    string digit_map = maps[digit];
+    int digit_map_len = digit_map.length();
+
+    for (int i = 0; i < digit_map_len; i++) {
+        _letterCombinations(digits, idx + 1, building + digit_map.at(i));
+    }
+}
+
+vector<string> letterCombinations(string digits)
+{
+    if (digits.length() == 0) return {};
+
+    _letterCombinations(digits, 0, "");
+
+    return coms;
+}
+
+
+vector<vector<int>> fourSum(vector<int>& nums, int target)
+{
+    set<vector<int>> quads;
+    sort(nums.begin(), nums.end());
+
+    int nums_len = nums.size();
+
+    if (nums_len == 0) return {};
+
+    for (int i = 0; i < nums_len - 3; i++) {
+        if (i > 0 && nums[i] == nums[i - 1]) continue;
+        for (int j = i + 1; j < nums_len - 2; j++) {
+            if (j > i + 1 && nums[j] == nums[j - 1]) continue;
+            int l = j + 1;
+            int r = nums_len - 1;
+
+            while(l < r) {
+
+                if (nums[i] + nums[j] + nums[l] + nums[r] == target) {
+                    vector<int> vec{nums[i], nums[j], nums[l], nums[r]};
+                    sort(vec.begin(), vec.end());
+                    quads.insert(vec);
+                    l++;
+                    r--;
+                }
+                else if (nums[i] + nums[j] + nums[l] + nums[r] < target) {
+                    l++;
+                }
+                else {
+                    r--;
+                }
+            }
+        }
+    }
+
+    vector<vector<int>> vec(quads.begin(), quads.end());
+
+    return vec;
+}
