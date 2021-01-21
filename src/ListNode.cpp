@@ -30,3 +30,15 @@ void ListNode::printList()
 
     std::cout << '\n';
 }
+
+void ListNode::deleteList()
+{
+    ListNode *curr = this;
+    ListNode *prev;
+
+    while(curr != nullptr) {
+        prev = curr;
+        curr = curr->next;
+        delete prev;
+    }
+}
