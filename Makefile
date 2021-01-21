@@ -1,6 +1,6 @@
 CC     := g++
-CFLAGS := -g -I inc/
-LIBS   :=
+CFLAGS := -g -I inc/ -fsanitize=address
+LIBS   := -lasan
 
 SRCS   := $(wildcard src/*.cpp)
 SRCS   := $(filter-out src/test.cpp, $(SRCS))
