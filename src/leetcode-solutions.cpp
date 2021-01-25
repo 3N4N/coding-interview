@@ -665,3 +665,100 @@ bool brackets_valid(string s)
 
     return false;
 }
+
+
+
+ListNode* mergeTwoLists(ListNode *l1, ListNode *l2)
+{
+
+    if (l1 == nullptr && l2 == nullptr) return nullptr;
+    if (l1 == nullptr) return l2;
+    if (l2 == nullptr) return l1;
+
+    ListNode *merged_list = nullptr;
+
+    if (l1->val < l2->val) {
+        merged_list = new ListNode(l1->val);
+        l1 = l1->next;
+    }
+    else {
+        merged_list = new ListNode(l2->val);
+        l2 = l2->next;
+    }
+
+    ListNode *head = merged_list;
+
+    while(l1 != nullptr && l2 != nullptr) {
+        if (l1->val < l2->val) {
+            merged_list->next = new ListNode(l1->val);
+            merged_list = merged_list->next;
+            l1 = l1->next;
+        }
+        else {
+            merged_list->next = new ListNode(l2->val);
+            merged_list = merged_list->next;
+            l2 = l2->next;
+        }
+    }
+
+    while (l1 != nullptr) {
+        merged_list->next = new ListNode(l1->val);
+        merged_list = merged_list->next;
+        l1 = l1->next;
+    }
+
+    while (l2 != nullptr) {
+        merged_list->next = new ListNode(l2->val);
+        merged_list = merged_list->next;
+        l2 = l2->next;
+    }
+
+    return head;
+}
+
+
+
+
+void _generateParenthesis(vector<string>& combs,
+                          string building,
+                          int n,
+                          int n_opened,
+                          int n_closed)
+{
+    if (n == 0) return;
+    if (n == 1) { combs.push_back("()"); return; }
+
+    int building_len = building.length();
+    if (building_len == 2 * n) {
+        combs.push_back(building);
+        return;
+    }
+
+    if (building_len == 0) {
+        _generateParenthesis(combs, building + "(", n, 1, 0);
+    }
+    else if (building.at(building_len - 1) == '(') {
+        if (n_opened < n) {
+            _generateParenthesis(combs, building + "(", n, n_opened + 1, n_closed);
+        }
+        _generateParenthesis(combs, building + ")", n, n_opened, n_closed + 1);
+    }
+    else if (building.at(building_len - 1) == ')') {
+        if (n_opened > n_closed) {
+            _generateParenthesis(combs, building + ")", n, n_opened, n_closed + 1);
+        }
+        if (n_opened < n) {
+            _generateParenthesis(combs, building + "(", n, n_opened + 1, n_closed);
+        }
+    }
+}
+
+vector<string> generateParenthesis(int n)
+{
+
+    vector<string> combs;
+
+    _generateParenthesis(combs, "", n, 0, 0);
+
+    return combs;
+}

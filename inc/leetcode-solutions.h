@@ -59,4 +59,12 @@ ListNode* removeNthFromEnd(ListNode* head, int n);
 // https://leetcode.com/problems/valid-parentheses/
 bool brackets_valid(std::string s);
 
+// https://leetcode.com/problems/merge-two-sorted-lists/
+ListNode* mergeTwoLists(ListNode *l1, ListNode *l2);
+
+// https://leetcode.com/problems/generate-parentheses/
+std::vector<std::string> generateParenthesis(int n);
+
+
+
 #endif      // LEETCODE_SOLUTIONS_H
